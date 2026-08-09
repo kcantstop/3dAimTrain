@@ -194,7 +194,7 @@ MonoBehaviour:
   _obstacleRange: 5
   _sphereRadius: 0.75
   _castHeight: 1
-  _fireballPrefab: {fileID: 0}
+  _fireballPrefab: {fileID: 3765816690194390519, guid: 0a55d08ba9f454881b91122bdd81001a, type: 3}
   Fireball: {fileID: 0}
 --- !u!1 &4063794216224933828
 GameObject:

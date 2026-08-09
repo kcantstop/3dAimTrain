@@ -43,7 +43,7 @@ public class Wandering : MonoBehaviour
                 {
                     Fireball = Instantiate(
                         _fireballPrefab,
-                        transform.TransformPoint(Vector3.forward * 1.5f),
+                        transform.TransformPoint(new Vector3(0.0f, _castHeight, 1.5f)),
                         transform.rotation
                     );
                 }
