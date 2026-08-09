@@ -39,7 +39,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField, Range(0.0f, 1.0f)] private float _musicVolume = 0.5f;
     [SerializeField, Range(0.0f, 1.0f)] private float _sfxVolume = 1.0f;
 
-
+    // Volume settings persist between sessions so the menu sliders are sticky.
+    private const string MusicVolumeKey = "BLAIM_MusicVolume";
+    private const string SfxVolumeKey = "BLAIM_SfxVolume";
 
 
     public float MusicVolume
@@ -49,10 +51,13 @@ public class AudioManager : MonoBehaviour
         {
             _musicVolume = Mathf.Clamp01(value);
             if (_musicSource) { _musicSource.volume = _musicVolume; }
+
+            PlayerPrefs.SetFloat(MusicVolumeKey, _musicVolume);
+            PlayerPrefs.Save();
         }
     }
 
-    
+
     public float SfxVolume
     {
         get => _sfxVolume;
@@ -61,6 +66,9 @@ public class AudioManager : MonoBehaviour
             _sfxVolume = Mathf.Clamp01(value);
             if (_sfxSource) { _sfxSource.volume = _sfxVolume; }
             if (_uiSource) { _uiSource.volume = _sfxVolume; }
+
+            PlayerPrefs.SetFloat(SfxVolumeKey, _sfxVolume);
+            PlayerPrefs.Save();
         }
     }
 
@@ -79,9 +87,8 @@ public class AudioManager : MonoBehaviour
 
         EnsureSources();
 
-        
-        MusicVolume = _musicVolume;
-        SfxVolume = _sfxVolume;
+        MusicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, _musicVolume);
+        SfxVolume = PlayerPrefs.GetFloat(SfxVolumeKey, _sfxVolume);
     }
 
     private void OnDestroy()
