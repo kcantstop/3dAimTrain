@@ -39,11 +39,14 @@ public class TargetDummy : MonoBehaviour, IDamageable
     public bool IsAlive => _isAlive;
 
 
+    private Wandering _wandering;
+
     private void Awake()
     {
         _health = _maxHealth;
         _startPosition = transform.position;
         _startRotation = transform.rotation;
+        _wandering = GetComponent<Wandering>();
     }
     
 
@@ -59,6 +62,8 @@ public class TargetDummy : MonoBehaviour, IDamageable
     private void Defeat(bool headshot)
     {
         _isAlive = false;
+
+        if (_wandering) { _wandering.IsAlive = false; }
 
         if (GameManager.Exists) { GameManager.Instance.AddScore(_pointValue, headshot); }
         if (AudioManager.Exists) { AudioManager.Instance.PlayEnemyDeath(); }
@@ -103,6 +108,8 @@ public class TargetDummy : MonoBehaviour, IDamageable
 
         _health = _maxHealth;
         _isAlive = true;
+
+        if (_wandering) { _wandering.IsAlive = true; }
 
         SetVisible(true);
     }

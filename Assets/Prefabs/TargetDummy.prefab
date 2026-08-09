@@ -125,7 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f19d772cdb7d64e35a3f466d33154c7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hitbox
-  _damageMultiplier: 2
   _isCritical: 1
 --- !u!1 &1404232732358936081
 GameObject:
@@ -137,6 +136,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5936551813119555376}
   - component: {fileID: 5623284523198347044}
+  - component: {fileID: 5287521918252802807}
   m_Layer: 0
   m_Name: TargetDummy
   m_TagString: Untagged
@@ -178,6 +178,24 @@ MonoBehaviour:
   _defeatAnimTime: 0.6
   _respawns: 1
   _respawnDelay: 3
+--- !u!114 &5287521918252802807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404232732358936081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3d21ba4f7b5b461dbbb8c949ec8b0b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Wandering
+  _speed: 3
+  _obstacleRange: 5
+  _sphereRadius: 0.75
+  _castHeight: 1
+  _fireballPrefab: {fileID: 0}
+  Fireball: {fileID: 0}
 --- !u!1 &4063794216224933828
 GameObject:
   m_ObjectHideFlags: 0
