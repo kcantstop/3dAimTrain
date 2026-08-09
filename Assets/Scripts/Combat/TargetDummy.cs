@@ -38,6 +38,12 @@ public class TargetDummy : MonoBehaviour, IDamageable
     
     public bool IsAlive => _isAlive;
 
+    public bool Respawns
+    {
+        get => _respawns;
+        set => _respawns = value;
+    }
+
 
     private Wandering _wandering;
 

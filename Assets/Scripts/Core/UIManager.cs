@@ -19,7 +19,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private TMP_Text _accuracyText;
     [SerializeField] private TMP_Text _timerText;
-    [SerializeField] private TMP_Text _waveText;
     [SerializeField] private TMP_Text _healthText;
     [SerializeField] private Image _healthBar;
     [SerializeField] private GameObject _crosshair;
@@ -109,8 +108,6 @@ public class UIManager : MonoBehaviour
         if (GameManager.Exists) { HandleScoreChanged(GameManager.Instance.Score); }
 
         if (_playerHealth) { HandleHealthChanged(_playerHealth.Health, _playerHealth.MaxHealth); }
-
-        SetWave(1, 0);
     }
 
     private void HandleScoreChanged(int score)
@@ -154,13 +151,6 @@ public class UIManager : MonoBehaviour
         _timerText.color = remaining <= 10.0f ? Color.red : Color.white;
     }
 
-
-    public void SetWave(int wave, int totalWaves)
-    {
-        if (!_waveText) { return; }
-
-        _waveText.text = totalWaves > 0 ? $"WAVE {wave} / {totalWaves}" : $"WAVE {wave}";
-    }
 
     private void HandlePowerUpTimer(float remaining, float total)
     {
