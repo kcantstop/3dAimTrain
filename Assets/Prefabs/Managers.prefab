@@ -67,8 +67,8 @@ MonoBehaviour:
   _musicSource: {fileID: 1446384419298076316}
   _sfxSource: {fileID: 8472606104685204306}
   _uiSource: {fileID: 5130937504775799045}
-  _menuMusic: {fileID: 0}
-  _gameMusic: {fileID: 0}
+  _menuMusic: {fileID: 8300000, guid: 7c8919f45d37b40b78c4c300b438bb74, type: 3}
+  _gameMusic: {fileID: 8300000, guid: e94599617ff2142c4a024c1e9331afac, type: 3}
   _gunshot: {fileID: 8300000, guid: 49ec3d78796f4498fa74e1b50fb38078, type: 3}
   _enemyHit: {fileID: 8300000, guid: 03eb8a2a4f5e748758949ba24611eb3d, type: 3}
   _enemyDeath: {fileID: 8300000, guid: f8c0cdfd153184d8f89fef4d1300c4d7, type: 3}
@@ -82,6 +82,8 @@ MonoBehaviour:
   _enemyDeathVolume: 1.67
   _playerHurtVolume: 1.21
   _pickupVolume: 1.44
+  _enemyHitDelay: 0.05
+  _enemyDeathDelay: 0.05
 --- !u!82 &1446384419298076316
 AudioSource:
   m_ObjectHideFlags: 0

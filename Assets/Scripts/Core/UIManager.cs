@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
 
     [Space(5), Header("Panels")]
     [SerializeField] private GameObject _pausePanel;
+    [SerializeField] private Slider _sensitivitySlider;
     [SerializeField] private GameObject _resultsPanel;
     [SerializeField] private TMP_Text _resultsTitleText;
     [SerializeField] private TMP_Text _resultsStatsText;
@@ -37,6 +38,7 @@ public class UIManager : MonoBehaviour
 
     private PlayerHealth _playerHealth;
     private WeaponController _weapon;
+    private MouseLook[] _mouseLooks;
     private float _hitMarkerTimer;
     
 
@@ -54,6 +56,16 @@ public class UIManager : MonoBehaviour
     {
         _playerHealth = FindFirstObjectByType<PlayerHealth>();
         _weapon = FindFirstObjectByType<WeaponController>();
+        _mouseLooks = FindObjectsByType<MouseLook>(FindObjectsSortMode.None);
+
+        if (_sensitivitySlider)
+        {
+            _sensitivitySlider.minValue = MouseLook.MinSliderValue;
+            _sensitivitySlider.maxValue = MouseLook.MaxSliderValue;
+
+            float current = _mouseLooks.Length > 0 ? _mouseLooks[0].Sensitivity : 0.0f;
+            _sensitivitySlider.SetValueWithoutNotify(MouseLook.SliderFromSensitivity(current));
+        }
 
         Subscribe();
         RefreshAll();
@@ -221,6 +233,20 @@ public class UIManager : MonoBehaviour
     private static void ShowPanel(GameObject panel, bool visible)
     {
         if (panel) { panel.SetActive(visible); }
+    }
+
+    // Applies to the live MouseLook components as well as the saved value, so
+    // the change is felt as soon as the pause menu closes.
+    public void OnSensitivityChanged(float sliderValue)
+    {
+        if (_mouseLooks == null) { return; }
+
+        float sensitivity = MouseLook.SensitivityFromSlider(sliderValue);
+
+        foreach (MouseLook look in _mouseLooks)
+        {
+            if (look) { look.Sensitivity = sensitivity; }
+        }
     }
 
     public void OnResumeButton()

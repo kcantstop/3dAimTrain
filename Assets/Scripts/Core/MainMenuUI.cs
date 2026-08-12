@@ -12,9 +12,6 @@ public class MainMenuUI : MonoBehaviour
     [SerializeField] private Slider _musicSlider;
     [SerializeField] private Slider _sfxSlider;
 
-    [Space(5), Header("Buttons")]
-    [SerializeField] private Button _quitButton;
-
     private void Start()
     {
         Cursor.lockState = CursorLockMode.None;
@@ -33,11 +30,6 @@ public class MainMenuUI : MonoBehaviour
             if (_musicSlider) { _musicSlider.SetValueWithoutNotify(AudioManager.Instance.MusicVolume); }
             if (_sfxSlider) { _sfxSlider.SetValueWithoutNotify(AudioManager.Instance.SfxVolume); }
         }
-
-      
-#if UNITY_WEBGL && !UNITY_EDITOR
-        if (_quitButton) { _quitButton.gameObject.SetActive(false); }
-#endif
     }
 
     public void OnPlayButton()
