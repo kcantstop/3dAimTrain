@@ -22,6 +22,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text _healthText;
     [SerializeField] private Image _healthBar;
     [SerializeField] private GameObject _crosshair;
+    [SerializeField] private GameObject _hitMarker;
+    [SerializeField, Range(0.02f, 0.5f)] private float _hitMarkerTime = 0.08f;
 
     [Space(5), Header("Power-Up")]
     [SerializeField] private TMP_Text _powerUpText;
@@ -35,6 +37,7 @@ public class UIManager : MonoBehaviour
 
     private PlayerHealth _playerHealth;
     private WeaponController _weapon;
+    private float _hitMarkerTimer;
     
 
     private void Awake()
@@ -57,7 +60,10 @@ public class UIManager : MonoBehaviour
 
         ShowPanel(_pausePanel, false);
         ShowPanel(_resultsPanel, false);
+        ShowPanel(_hitMarker, false);
         ShowPowerUp(false);
+
+        if (AudioManager.Exists) { AudioManager.Instance.PlayGameMusic(); }
     }
 
     private void OnDisable()
@@ -68,6 +74,7 @@ public class UIManager : MonoBehaviour
     private void Update()
     {
         UpdateTimer();
+        UpdateHitMarker();
     }
     
 
@@ -130,6 +137,20 @@ public class UIManager : MonoBehaviour
     private void HandleShotResolved(bool hit)
     {
         UpdateAccuracy();
+
+        if (!hit || !_hitMarker) { return; }
+
+        _hitMarker.SetActive(true);
+        _hitMarkerTimer = _hitMarkerTime;
+    }
+
+    private void UpdateHitMarker()
+    {
+        if (_hitMarkerTimer <= 0.0f) { return; }
+
+        _hitMarkerTimer -= Time.unscaledDeltaTime;
+
+        if (_hitMarkerTimer <= 0.0f) { ShowPanel(_hitMarker, false); }
     }
 
     private void UpdateAccuracy()
@@ -195,8 +216,6 @@ public class UIManager : MonoBehaviour
                 $"SCORE     {gm.Score:N0}\n" +
                 $"ACCURACY  {gm.AccuracyPercent:0.0}%  ({gm.ShotsHit}/{gm.ShotsFired})";
         }
-
-        if (AudioManager.Exists) { AudioManager.Instance.PlayGameOver(); }
     }
 
     private static void ShowPanel(GameObject panel, bool visible)

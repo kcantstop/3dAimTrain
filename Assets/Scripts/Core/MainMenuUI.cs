@@ -34,7 +34,7 @@ public class MainMenuUI : MonoBehaviour
             if (_sfxSlider) { _sfxSlider.SetValueWithoutNotify(AudioManager.Instance.SfxVolume); }
         }
 
-        // WebGL cannot close its own tab, so the quit button is hidden there.
+      
 #if UNITY_WEBGL && !UNITY_EDITOR
         if (_quitButton) { _quitButton.gameObject.SetActive(false); }
 #endif

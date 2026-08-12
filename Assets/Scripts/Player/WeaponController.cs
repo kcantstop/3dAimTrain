@@ -32,7 +32,7 @@ public class WeaponController : MonoBehaviour
 
     private void Awake()
     {
-        // Camera.main returns the camera that is currently rendering.
+  
         _cam = GetComponentInChildren<Camera>();
 
         if (!_cam) { _cam = Camera.main; }
@@ -51,6 +51,8 @@ public class WeaponController : MonoBehaviour
 
     private void Fire()
     {
+        if (AudioManager.Exists) { AudioManager.Instance.PlayGunshot(); }
+
         Vector3 screenMiddle = new(_cam.pixelWidth * 0.5f, _cam.pixelHeight * 0.5f, 0.0f);
         Ray ray = _cam.ScreenPointToRay(screenMiddle);
 
@@ -81,6 +83,9 @@ public class WeaponController : MonoBehaviour
         bool headshot = hitbox && hitbox.IsCritical;
 
         target.TakeDamage(_damage, headshot);
+
+     
+        if (AudioManager.Exists && target.IsAlive) { AudioManager.Instance.PlayEnemyHit(); }
 
         return true;
     }

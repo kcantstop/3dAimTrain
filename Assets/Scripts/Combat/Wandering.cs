@@ -37,8 +37,7 @@ public class Wandering : MonoBehaviour
         {
             if (hit.transform.CompareTag("Player"))
             {
-                // Guarded so dummies with no fireball assigned never call
-                // Instantiate on a null prefab.
+                
                 if (_fireballPrefab && !Fireball)
                 {
                     Fireball = Instantiate(

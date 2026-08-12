@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 
@@ -33,13 +34,23 @@ public class AudioManager : MonoBehaviour
 
     [Space(5), Header("UI Sounds")]
     [SerializeField] private AudioClip _uiClick;
-    [SerializeField] private AudioClip _gameOver;
 
     [Space(5), Header("Volumes")]
     [SerializeField, Range(0.0f, 1.0f)] private float _musicVolume = 0.5f;
     [SerializeField, Range(0.0f, 1.0f)] private float _sfxVolume = 1.0f;
+    
+    [Space(5), Header("Clip Balance")]
+    [SerializeField, Range(0.0f, 4.0f)] private float _gunshotVolume = 1.0f;
+    [SerializeField, Range(0.0f, 4.0f)] private float _enemyHitVolume = 1.0f;
+    [SerializeField, Range(0.0f, 4.0f)] private float _enemyDeathVolume = 1.0f;
+    [SerializeField, Range(0.0f, 4.0f)] private float _playerHurtVolume = 1.0f;
+    [SerializeField, Range(0.0f, 4.0f)] private float _pickupVolume = 1.0f;
 
-    // Volume settings persist between sessions so the menu sliders are sticky.
+    
+    [Space(5), Header("Clip Delays")]
+    [SerializeField, Range(0.0f, 0.3f)] private float _enemyHitDelay = 0.05f;
+    [SerializeField, Range(0.0f, 0.3f)] private float _enemyDeathDelay = 0.05f;
+    
     private const string MusicVolumeKey = "BLAIM_MusicVolume";
     private const string SfxVolumeKey = "BLAIM_SfxVolume";
 
@@ -147,32 +158,44 @@ public class AudioManager : MonoBehaviour
 
     
     
-    public void PlaySfx(AudioClip clip, float pitchVariance = 0.0f)
+    public void PlaySfx(AudioClip clip, float pitchVariance = 0.0f, float volumeScale = 1.0f, float delay = 0.0f)
     {
         if (!clip || !_sfxSource) { return; }
+
+        if (delay > 0.0f)
+        {
+            StartCoroutine(PlayDelayed(clip, pitchVariance, volumeScale, delay));
+            return;
+        }
 
         _sfxSource.pitch = pitchVariance > 0.0f
             ? 1.0f + Random.Range(-pitchVariance, pitchVariance)
             : 1.0f;
 
-        _sfxSource.PlayOneShot(clip, _sfxVolume);
+        _sfxSource.PlayOneShot(clip, _sfxVolume * volumeScale);
     }
 
-    public void PlayGunshot() => PlaySfx(_gunshot, 0.06f);
+    
+    private IEnumerator PlayDelayed(AudioClip clip, float pitchVariance, float volumeScale, float delay)
+    {
+        yield return new WaitForSecondsRealtime(delay);
 
-    public void PlayEnemyHit() => PlaySfx(_enemyHit, 0.1f);
+        PlaySfx(clip, pitchVariance, volumeScale);
+    }
 
-    public void PlayEnemyDeath() => PlaySfx(_enemyDeath, 0.08f);
+    public void PlayGunshot() => PlaySfx(_gunshot, 0.06f, _gunshotVolume);
 
-    public void PlayPlayerHurt() => PlaySfx(_playerHurt);
+    public void PlayEnemyHit() => PlaySfx(_enemyHit, 0.1f, _enemyHitVolume, _enemyHitDelay);
 
-    public void PlayPickup() => PlaySfx(_pickup);
+    public void PlayEnemyDeath() => PlaySfx(_enemyDeath, 0.08f, _enemyDeathVolume, _enemyDeathDelay);
+
+    public void PlayPlayerHurt() => PlaySfx(_playerHurt, 0.0f, _playerHurtVolume);
+
+    public void PlayPickup() => PlaySfx(_pickup, 0.0f, _pickupVolume);
 
   
 
     public void PlayUiClick() => PlayUiSound(_uiClick);
-
-    public void PlayGameOver() => PlayUiSound(_gameOver);
 
     
     public void PlayUiSound(AudioClip clip)

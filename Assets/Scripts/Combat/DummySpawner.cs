@@ -27,8 +27,7 @@ public class DummySpawner : MonoBehaviour
     {
         if (GameManager.Exists && GameManager.Instance.State != GameState.Playing) { return; }
 
-        // Destroyed dummies leave null entries behind, so the list is pruned
-        // before the cap is checked.
+       
         _spawned.RemoveAll(dummy => !dummy);
 
         _timer += Time.deltaTime;
@@ -54,8 +53,7 @@ public class DummySpawner : MonoBehaviour
             Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f)
         );
 
-        // Spawned dummies are replaced by new spawns rather than reviving in
-        // place, so the arena never fills up with respawning copies.
+      
         TargetDummy target = dummy.GetComponent<TargetDummy>();
 
         if (target) { target.Respawns = false; }

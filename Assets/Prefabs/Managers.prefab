@@ -69,15 +69,19 @@ MonoBehaviour:
   _uiSource: {fileID: 5130937504775799045}
   _menuMusic: {fileID: 0}
   _gameMusic: {fileID: 0}
-  _gunshot: {fileID: 0}
-  _enemyHit: {fileID: 0}
-  _enemyDeath: {fileID: 0}
-  _playerHurt: {fileID: 0}
-  _pickup: {fileID: 0}
-  _uiClick: {fileID: 0}
-  _gameOver: {fileID: 0}
+  _gunshot: {fileID: 8300000, guid: 49ec3d78796f4498fa74e1b50fb38078, type: 3}
+  _enemyHit: {fileID: 8300000, guid: 03eb8a2a4f5e748758949ba24611eb3d, type: 3}
+  _enemyDeath: {fileID: 8300000, guid: f8c0cdfd153184d8f89fef4d1300c4d7, type: 3}
+  _playerHurt: {fileID: 8300000, guid: ebe93e08265c841aeb96f4ffabbee10a, type: 3}
+  _pickup: {fileID: 8300000, guid: 15962645078494245a21fed9946eb499, type: 3}
+  _uiClick: {fileID: 8300000, guid: d1f99721354c6471587510e6d832ebde, type: 3}
   _musicVolume: 0.5
   _sfxVolume: 1
+  _gunshotVolume: 0.35
+  _enemyHitVolume: 1.47
+  _enemyDeathVolume: 1.67
+  _playerHurtVolume: 1.21
+  _pickupVolume: 1.44
 --- !u!82 &1446384419298076316
 AudioSource:
   m_ObjectHideFlags: 0
